@@ -7,14 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-/**
- * @author Eduardo Sganderla
- *
- * @since 1.0.0, 22/03/2022
- * @version 1.0.0
- */
+
 @Repository
 public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
@@ -26,8 +22,8 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
     @Modifying
     @Query("UPDATE Medico medico " +
-            "SET medico.excluido = now() " +
+            "SET medico.excluido = :now " +
             "WHERE medico.id = :medico")
-    public void updateStatus(@Param("medico") Long idMedico);
+    public void updateStatus(@Param("medico") Long idMedico, @Param("now") DateTimeFormatter now);
 
 }

@@ -7,18 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author Eduardo Sganderla
- *
- * @since 1.0.0, 05/04/2022
- * @version 1.0.0
- */
+import java.time.format.DateTimeFormatter;
+
+
 @Repository
 public interface SecretariaRepository extends JpaRepository<Secretaria, Long> {
     @Modifying
     @Query("UPDATE Secretaria secretaria " +
-            "SET secretaria.excluido = now() " +
+            "SET secretaria.excluido = :now " +
             "WHERE secretaria.id = :secretaria")
-    public void updateStatus(@Param("secretaria") Long idSecretaria);
+    public void updateStatus(@Param("secretaria") Long idSecretaria, @Param("now") DateTimeFormatter now);
 
 }

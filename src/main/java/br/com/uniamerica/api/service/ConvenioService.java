@@ -1,7 +1,6 @@
 package br.com.uniamerica.api.service;
 
 import br.com.uniamerica.api.entity.Convenio;
-import br.com.uniamerica.api.entity.Medico;
 import br.com.uniamerica.api.repository.ConvenioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ConvenioService {
@@ -38,8 +37,10 @@ public class ConvenioService {
 
     @Transactional
     public void updateStatus(Long id, Convenio convenio){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        dtf.format(LocalDateTime.now());
         if (id == convenio.getId()) {
-            this.convenioRepository.updateStatus(convenio.getId());
+            this.convenioRepository.updateStatus(convenio.getId(), dtf);
         }
         else {
             throw new RuntimeException();

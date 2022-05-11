@@ -7,12 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-/**
- * @author Eduardo Sganderla
- *
- * @since 1.0.0, 05/04/2022
- * @version 1.0.0
- */
+import java.time.format.DateTimeFormatter;
+
+
 @Repository
 public interface EspecialidadeRepository extends JpaRepository<Especialidade, Long> {
 
@@ -22,8 +19,8 @@ public interface EspecialidadeRepository extends JpaRepository<Especialidade, Lo
      */
     @Modifying
     @Query("UPDATE Especialidade especialidade " +
-            "SET especialidade.excluido = now() " +
+            "SET especialidade.excluido = :now " +
             "WHERE especialidade.id = :especialidade")
-    public void updateStatus(@Param("especialidade") Long idEspecialidade);
+    public void updateStatus(@Param("especialidade") Long idEspecialidade, @Param("now") DateTimeFormatter now);
 
 }

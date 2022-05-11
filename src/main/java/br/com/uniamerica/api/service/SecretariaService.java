@@ -2,16 +2,14 @@ package br.com.uniamerica.api.service;
 
 import br.com.uniamerica.api.entity.Secretaria;
 import br.com.uniamerica.api.repository.SecretariaRepository;
-import br.com.uniamerica.api.repository.SecretariaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Set;
 
 
 public class SecretariaService {
@@ -42,8 +40,10 @@ public class SecretariaService {
 
     @Transactional
     public void updateStatus(Long id, Secretaria secretaria){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        dtf.format(LocalDateTime.now());
         if (id == secretaria.getId()) {
-            this.secretariaRepository.updateStatus(secretaria.getId());
+            this.secretariaRepository.updateStatus(secretaria.getId(), dtf);
         }
         else {
             throw new RuntimeException();
