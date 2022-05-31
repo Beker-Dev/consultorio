@@ -52,4 +52,13 @@ public class MedicoService {
             throw new RuntimeException();
         }
     }
+    @Transactional
+    public void desativar(Long id, Medico medico) {
+        if (id == medico.getId()) {
+            this.medicoRepository.desativar(medico.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 }

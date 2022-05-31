@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -54,13 +55,16 @@ public class AgendaService {
     }
 
     public void validarFormulario(Agenda agenda) {
+        LocalDateTime diaSemana = null;
         if (agenda.getData() == null || agenda.getPaciente().getId() == null || agenda.getMedico().getId() == null) {
             throw new RuntimeException("Data ou Paciente ou Medico sao invalidos");
+        }
+        else if (diaSemana.getDayOfWeek() == DayOfWeek.SATURDAY || diaSemana.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            throw new RuntimeException("Data escolhida esta fora do horario comercial");
         }
         else {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-
             LocalDateTime horaAgenda = LocalDateTime.parse(dtf.format(agenda.getData()));
             LocalDateTime horaInicio = LocalDateTime.parse(sdf.format("08:00"));
             LocalDateTime horaFim = LocalDateTime.parse(sdf.format("17:00"));
@@ -93,5 +97,81 @@ public class AgendaService {
         List<Long> result = this.agendaRepository.agendamentoExiste(agenda, idMedico, idPaciente, horaAgenda,
                 horaInicio, horaFim, horaEntradaAlmoco, horaSaidaAlmoco);
         return result;
+    }
+
+    @Transactional
+    public void verifyNewStatus(Agenda agenda) {
+        String statusDB = this.agendaRepository.getStatusAgenda(agenda.getStatus());
+        Long secretariaDB = this.agendaRepository.getSecretaria(agenda.getSecretaria());
+
+        if (! agenda.getStatus().equals(statusDB)) {
+            if (agenda.getStatus().equals("Pendente")) {
+                if (statusDB.equals("Aprovado") || statusDB.equals("Rejeitado") || statusDB.equals("Cancelado")) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Aprovado")) {
+                if (statusDB.equals("Cancelado") ||
+                        statusDB.equals("Compareceu") ||
+                        statusDB.equals("Nao Compareceu")) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Rejeitado")) {
+                if (statusDB.equals("Pendente") && secretariaDB != null) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Aprovado")) {
+                if (statusDB.equals("Pendente") && secretariaDB != null) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Cancelado")) {
+                if (statusDB.equals("Pendente") || statusDB.equals("Aprovado") && secretariaDB != null) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Compareceu")) {
+                if (statusDB.equals("Aprovado") && secretariaDB != null && LocalDateTime.now().compareTo(agenda.getData()) <= 0) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+            else if (agenda.getStatus().equals("Nao Compareceu")) {
+                if (statusDB.equals("Aprovado") && secretariaDB != null && LocalDateTime.now().compareTo(agenda.getData()) <= 0) {
+                    return;
+                }
+                else {
+                    throw new RuntimeException("Nao pode alterar o status");
+                }
+            }
+        }
+    }
+
+    @Transactional
+    public void desativar(final Long id, final Agenda agenda) {
+        if (id == agenda.getId()) {
+            this.agendaRepository.desativar(agenda.getId());
+        } else {
+            throw new RuntimeException("Error: Informações inconsistente, tente novamento mais tarde;");
+        }
     }
 }

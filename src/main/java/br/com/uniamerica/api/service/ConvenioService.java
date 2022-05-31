@@ -46,4 +46,14 @@ public class ConvenioService {
             throw new RuntimeException();
         }
     }
+
+    @Transactional
+    public void desativar(Long id, Convenio convenio){
+        if (id == convenio.getId()) {
+            this.convenioRepository.desativar(convenio.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 }

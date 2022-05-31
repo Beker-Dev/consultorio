@@ -77,4 +77,13 @@ public class EspecialidadeService {
             throw new RuntimeException();
         }
     }
+    @Transactional
+    public void desativar(Long id, Especialidade especialidade){
+        if (id == especialidade.getId()) {
+            this.especialidadeRepository.desativar(especialidade.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 }

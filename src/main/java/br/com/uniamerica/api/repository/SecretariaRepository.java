@@ -18,4 +18,7 @@ public interface SecretariaRepository extends JpaRepository<Secretaria, Long> {
             "WHERE secretaria.id = :secretaria")
     public void updateStatus(@Param("secretaria") Long idSecretaria, @Param("now") DateTimeFormatter now);
 
+    @Modifying
+    @Query("UPDATE Secretaria secretaria SET secretaria.excluido = true WHERE secretaria.id = :idSecretaria")
+    public void desativar(@Param("idSecretaria") Long idSecretaria);
 }

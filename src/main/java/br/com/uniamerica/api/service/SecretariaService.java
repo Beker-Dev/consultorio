@@ -49,4 +49,13 @@ public class SecretariaService {
             throw new RuntimeException();
         }
     }
+    @Transactional
+    public void desativar(Long id, Secretaria secretaria){
+        if (id == secretaria.getId()) {
+            this.secretariaRepository.desativar(secretaria.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+        }
+    }
 }

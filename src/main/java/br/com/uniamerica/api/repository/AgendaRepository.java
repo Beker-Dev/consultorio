@@ -1,6 +1,8 @@
 package br.com.uniamerica.api.repository;
 
 import br.com.uniamerica.api.entity.Agenda;
+import br.com.uniamerica.api.entity.Secretaria;
+import br.com.uniamerica.api.entity.StatusAgenda;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -36,4 +38,15 @@ public interface AgendaRepository extends JpaRepository<Agenda, Long> {
             @Param("horaEntradaAlmoco") LocalDateTime horaEntradaAlmoco,
             @Param("horaSaidaAlmoco") LocalDateTime horaSaidaAlmoco
     );
+
+    @Query("SELECT agenda.secretaria FROM Agenda agenda WHERE agenda.id = :idAgenda")
+    public Long getSecretaria(@Param("secretaria") Secretaria secretaria);
+
+    @Query("SELECT agenda.status FROM Agenda agenda WHERE agenda.id = :idAgenda")
+    public String getStatusAgenda(@Param("status") StatusAgenda status);
+
+    @Modifying
+    @Query("UPDATE Agenda agenda SET agenda.excluido = true WHERE agenda.id = :idAgenda")
+    public void desativar(@Param("idAgenda") Long idAgenda);
+
 }

@@ -19,9 +19,9 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    Optional<Paciente> findById(Long id) {return this.pacienteRepository.findById(id);}
+    public Optional<Paciente> findById(Long id) {return this.pacienteRepository.findById(id);}
 
-    Page<Paciente> findAll(Pageable pageable) {return this.pacienteRepository.findAll(pageable);}
+    public Page<Paciente> findAll(Pageable pageable) {return this.pacienteRepository.findAll(pageable);}
 
     public void update(Long id, Paciente paciente) {
         if (id == paciente.getId()) {
@@ -74,6 +74,15 @@ public class PacienteService {
             paciente.setConvenio(null);
             paciente.setNumeroCartaoConvenio(null);
             paciente.setDataVencimento(null);
+        }
+    }
+    @Transactional
+    public void desativar(Long id, Paciente paciente) {
+        if (id == paciente.getId()) {
+            this.pacienteRepository.desativar(paciente.getId());
+        }
+        else {
+            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
         }
     }
 }
