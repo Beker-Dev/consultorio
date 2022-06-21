@@ -17,7 +17,7 @@ export class AgendaClient {
     public async findById(id: number): Promise<Agenda> {
         try {
             return (await this.axiosClient.get<Agenda>(`/${id}`)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -26,7 +26,6 @@ export class AgendaClient {
         try {
 
             let requestPath = ''
-
             requestPath += `?page=${pageRequest.currentPage}`
             requestPath += `&size=${pageRequest.pageSize}`
             requestPath += `&sort=${pageRequest.sortField === undefined
@@ -37,7 +36,7 @@ export class AgendaClient {
                     params: { filtros: pageRequest.filter }
                 }
             )).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -45,7 +44,7 @@ export class AgendaClient {
     public async cadastrar(agenda: Agenda): Promise<void> {
         try {
             return (await this.axiosClient.post('/', agenda))
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -53,7 +52,7 @@ export class AgendaClient {
     public async editar(agenda: Agenda): Promise<void> {
         try {
             return (await this.axiosClient.put(`/${agenda.id}`, agenda)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -61,7 +60,7 @@ export class AgendaClient {
     public async desativar(agenda: Agenda): Promise<void> {
         try {
             return (await this.axiosClient.put(`/desativar/${agenda.id}`, agenda)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }

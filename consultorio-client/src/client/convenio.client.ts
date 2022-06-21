@@ -1,28 +1,28 @@
-import { Medico } from "@/model/medico.model";
+import { Convenio } from "@/model/convenio.model";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";
 
-export class MedicoClient {
+export class ConvenioClient {
 
     private axiosClient: AxiosInstance;
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'http://localhost:8080/api/medicos',
+            baseURL: 'http://localhost:8080/api/convenios',
             headers: {'Content-type' : 'application/json'}
         });
     }
 
-    public async findById(id: number): Promise<Medico> {
+    public async findById(id: number): Promise<Convenio> {
         try {
-            return (await this.axiosClient.get<Medico>(`/${id}`)).data
-        } catch (error) {
+            return (await this.axiosClient.get<Convenio>(`/${id}`)).data
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
 
-    public async findByFiltrosPaginado(pageRequest : PageRequest): Promise<PageResponse<Medico>> {
+    public async findByFiltrosPaginado(pageRequest : PageRequest): Promise<PageResponse<Convenio>> {
         try {
 
             let requestPath = ''
@@ -32,36 +32,36 @@ export class MedicoClient {
             requestPath += `&sort=${pageRequest.sortField === undefined
                 ? '' : pageRequest.sortField},${pageRequest.direction}`
 
-            return (await this.axiosClient.get<PageResponse<Medico>>(requestPath,
+            return (await this.axiosClient.get<PageResponse<Convenio>>(requestPath,
                 {
                     params: { filtros: pageRequest.filter }
                 }
             )).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
 
-    public async cadastrar(medico: Medico): Promise<void> {
+    public async cadastrar(convenio: Convenio): Promise<void> {
         try {
-            return (await this.axiosClient.post('/', medico))
-        } catch (error) {
+            return (await this.axiosClient.post('/', convenio))
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
 
-    public async editar(medico: Medico): Promise<void> {
+    public async editar(convenio: Convenio): Promise<void> {
         try {
-            return (await this.axiosClient.put(`/${medico.id}`, medico)).data
-        } catch (error) {
+            return (await this.axiosClient.put(`/${convenio.id}`, convenio)).data
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
 
-    public async desativar(medico: Medico): Promise<void> {
+    public async desativar(convenio: Convenio): Promise<void> {
         try {
-            return (await this.axiosClient.put(`/desativar/${medico.id}`, medico)).data
-        } catch (error) {
+            return (await this.axiosClient.put(`/desativar/${convenio.id}`, convenio)).data
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }

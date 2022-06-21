@@ -17,7 +17,7 @@ export class SecretariaClient {
     public async findById(id: number): Promise<Secretaria> {
         try {
             return (await this.axiosClient.get<Secretaria>(`/${id}`)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -37,7 +37,7 @@ export class SecretariaClient {
                     params: { filtros: pageRequest.filter }
                 }
             )).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -45,7 +45,7 @@ export class SecretariaClient {
     public async cadastrar(secretaria: Secretaria): Promise<void> {
         try {
             return (await this.axiosClient.post('/', secretaria))
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -53,7 +53,7 @@ export class SecretariaClient {
     public async editar(secretaria: Secretaria): Promise<void> {
         try {
             return (await this.axiosClient.put(`/${secretaria.id}`, secretaria)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
@@ -61,7 +61,7 @@ export class SecretariaClient {
     public async desativar(secretaria: Secretaria): Promise<void> {
         try {
             return (await this.axiosClient.put(`/desativar/${secretaria.id}`, secretaria)).data
-        } catch (error) {
+        } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
