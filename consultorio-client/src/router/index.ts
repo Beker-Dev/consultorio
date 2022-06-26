@@ -16,11 +16,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/form',
-    name: 'home',
-    component: () => import("../views/secretaria/FormDetalharSecretaria.vue")
-  },
-  {
     path: '/convenio',
     name: 'convenio',
     component: () => import("../views/convenio/ConvenioView.vue")
@@ -92,7 +87,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/secretaria/detalhar',
-    name: 'detalharSecretaria',
+    name: 'home',
     component: () => import("../views/secretaria/FormDetalharSecretaria.vue")
   },
   {

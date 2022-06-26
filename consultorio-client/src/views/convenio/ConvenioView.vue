@@ -23,7 +23,7 @@
         <tr>
           <th>1</th>
           <td>Unimed</td>
-          <td>190,00</td>
+          <td>R$150.00</td>
           <td>
             <router-link to="/convenio/detalhar">
               <button class="button is-info">Detalhar</button>
