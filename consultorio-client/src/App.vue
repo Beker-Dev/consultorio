@@ -1,8 +1,8 @@
 <template>
-  
+
   <div class="column">
     <div class="columns is-12 menu-top">
-      Consultório - XYZ
+      Consultório - FozHealth
     </div>
   </div>
 
@@ -12,21 +12,21 @@
         <aside class="menu">
           <p class="menu-label"> Agenda </p>
           <ul class="menu-list">
-            <li><router-link to="/agendamento">Agendamento</router-link></li>
+            <li><router-link to="/agenda">Agendamento</router-link></li>
             <li><router-link to="/historico">Históricos</router-link></li>
           </ul>
-      
+
           <p class="menu-label"> Pessoas </p>
           <ul class="menu-list">
-            <li><a>Paciente</a></li>
-            <li><a>Médico</a></li>
-            <li><a>Secretaria</a></li>
+            <li><router-link to="/paciente">Pacientes</router-link></li>
+            <li><router-link to="/medico">Médicos</router-link></li>
+            <li><router-link to="/secretaria">Secretárias</router-link></li>
           </ul>
 
           <p class="menu-label"> Administração </p>
           <ul class="menu-list">
-            <li><a>Especialidade</a></li>
-            <li><a>Convênio</a></li>
+            <li><router-link to="/especialidade">Especialidades</router-link></li>
+            <li><router-link to="/convenio">Convênios</router-link></li>
           </ul>
         </aside>
       </nav>
