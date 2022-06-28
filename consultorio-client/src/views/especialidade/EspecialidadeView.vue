@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="titulo" >Lista de Especialidades</h1>
+    <h1 class="titulo" ><strong>Lista de Especialidades</strong></h1>
     <div class="control">
       <input class="input" type="nome-especialidade" placeholder="Buscar Especialidade">
 
@@ -66,7 +66,7 @@ export default {
   width: 100%;
   height: 100%;
   margin-left: 20px;
-  background-color: green;
+  background-color: rgb(33, 120, 11);
   color: white;
   border-radius: 5px;
   border-width: 0px;

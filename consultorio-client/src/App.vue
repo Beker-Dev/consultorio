@@ -2,7 +2,7 @@
 
   <div class="column">
     <div class="columns is-12 menu-top">
-      Consultório - FozHealth
+      <strong>Consultório - Foz Health</strong>
     </div>
   </div>
 
@@ -65,8 +65,17 @@ nav {
 }
 
 .menu-top{
-  background: hsl(0, 0%, 29%);
+  background: hsl(211, 100%, 50%);
   padding: 15px;
   color: white;
+  font-size: 20px;
+}
+
+.menu {
+  width: 70%;
+  height: 82.33vh;
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
 }
 </style>

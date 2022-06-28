@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="titulo" >Lista de Convênios</h1>
+    <h1 class="titulo" ><strong>Lista de Convênios</strong></h1>
     <div class="control">
       <input class="input" type="nome-convenios" placeholder="Buscar Convênios">
 
@@ -58,7 +58,7 @@ export default {
 .table{
   width: 91.4%;
   border-style: solid;
-  border-color: darkgrey;
+  border-color: gray;
   border-width: 1px;
 }
 .link-cad{
@@ -69,7 +69,7 @@ export default {
   width: 100%;
   height: 100%;
   margin-left: 20px;
-  background-color: green;
+  background-color: rgb(33, 120, 11);
   color: white;
   border-radius: 5px;
   border-width: 0px;
@@ -81,4 +81,5 @@ export default {
   width: 100%;
   flex-direction: row;
 }
+
 </style>

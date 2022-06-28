@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="titulo" >Lista de Médicos</h1>
+    <h1 class="titulo" ><strong>Lista de Médicos</strong></h1>
     <div class="control">
       <input class="input" type="busca-medico" placeholder="Buscar Médico">
 
@@ -17,7 +17,7 @@
           <th>Nome</th>
           <th>CRM</th>
           <th>Especialidade</th>
-          <th>% Participação</th>
+          <th>Participação</th>
           <th>Valor Consulta</th>
           <th>Celular</th>
           <th>Opções</th>
@@ -29,7 +29,7 @@
           <td>Joao</td>
           <td>04973/PR</td>
           <td>Neurologista</td>
-          <td>20</td>
+          <td>20%</td>
           <td>R$450.00</td>
           <td>55 45 99901 - 4570</td>
           <td>
@@ -77,7 +77,7 @@ export default {
   width: 100%;
   height: 100%;
   margin-left: 20px;
-  background-color: green;
+  background-color: rgb(33, 120, 11);
   color: white;
   border-radius: 5px;
   border-width: 0px;
