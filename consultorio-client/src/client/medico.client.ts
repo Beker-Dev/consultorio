@@ -1,4 +1,4 @@
-import { Medico } from "@/model/medico.model";
+import { Medico } from "@/model/medico";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";

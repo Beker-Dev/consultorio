@@ -1,4 +1,4 @@
-import { Paciente } from "@/model/paciente.model";
+import { Paciente } from "@/model/paciente";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";

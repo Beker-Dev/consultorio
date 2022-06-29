@@ -1,4 +1,4 @@
-import { Convenio } from "@/model/convenio.model";
+import { Convenio } from "@/model/convenio";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";

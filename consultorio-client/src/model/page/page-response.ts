@@ -1,5 +1,5 @@
 
-export class PageResponse<T> {
+ export class PageResponse<T> {
     content!: T[]
     totalPages!: number
     totalElements!: number

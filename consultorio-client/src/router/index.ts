@@ -8,97 +8,64 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
-    path: '/convenio',
-    name: 'convenio',
-    component: () => import("../views/convenio/ConvenioView.vue")
-  },
-  {
-    path: '/convenio/cadastrar',
-    name: 'formCadastrarConvenio',
-    component: () => import("../views/convenio/FormCadastrarConvenio.vue")
-  },
-  {
-    path: '/convenio/detalhar',
-    name: 'detalharConvenio',
-    component: () => import("../views/convenio/FormDetalharConvenio.vue")
-  },
-  {
-    path: '/especialidade',
-    name: 'especialidade',
-    component: () => import("../views/especialidade/EspecialidadeView.vue")
+    path: '/especialidade/listar',
+    name: 'especialidade-listar',
+    component: () => import(/* webpackChunkName: "list" */ '../views/especialidade/especialidade-list.vue')
   },
   {
     path: '/especialidade/cadastrar',
-    name: 'cadastrarEspecialidade',
-    component: () => import("../views/especialidade/FormCadastrarEspecialidade.vue")
+    name: 'especialidade-cadastrar',
+    component: () => import(/* webpackChunkName: "form" */ '../views/especialidade/especialidade-form.vue')
   },
   {
-    path: '/especialidade/detalhar',
-    name: 'detalharEspecialidade',
-    component: () => import("../views/especialidade/FormDetalharEspecialidade.vue")
+    path: '/convenio/listar',
+    name: 'convenio-listar',
+    component: () => import('../views/convenio/convenio-list.vue')
   },
   {
-    path: '/medico',
-    name: 'medico',
-    component: () => import("../views/medico/MedicoView.vue")
+    path: '/convenio/cadastrar',
+    name: 'convenio-cadastrar',
+    component: () => import('../views/convenio/convenio-form.vue')
+  },
+  {
+    path: '/medico/listar',
+    name: 'medico-listar',
+    component: () => import("../views/medico/medico-list.vue")
   },
   {
     path: '/medico/cadastrar',
-    name: 'cadastrarMedico',
-    component: () => import("../views/medico/FormCadastrarMedico.vue")
+    name: 'medico-cadastrar',
+    component: () => import("../views/medico/medico-form.vue")
   },
   {
-    path: '/medico/detalhar',
-    name: 'detalharMedico',
-    component: () => import("../views/medico/FormDetalharMedico.vue")
-  },
-  {
-    path: '/paciente',
-    name: 'paciente',
-    component: () => import("../views/paciente/PacienteView.vue")
+    path: '/paciente/listar',
+    name: 'paciente-listar',
+    component: () => import("../views/paciente/paciente-list.vue")
   },
   {
     path: '/paciente/cadastrar',
-    name: 'cadastrarPaciente',
-    component: () => import("../views/paciente/FormCadastrarPaciente.vue")
+    name: 'paciente-cadastrar',
+    component: () => import("../views/paciente/paciente-form.vue")
   },
   {
-    path: '/paciente/detalhar',
-    name: 'detalharPaciente',
-    component: () => import("../views/paciente/FormDetalharPaciente.vue")
-  },
-  {
-    path: '/secretaria',
-    name: 'secretaria',
-    component: () => import("../views/secretaria/SecretariaView.vue")
+    path: '/secretaria/listar',
+    name: 'secretaria-listar',
+    component: () => import("../views/secretaria/secretaria-list.vue")
   },
   {
     path: '/secretaria/cadastrar',
-    name: 'cadastrarSecretaria',
-    component: () => import("../views/secretaria/FormCadastrarSecretaria.vue")
+    name: 'secretaria-cadastrar',
+    component: () => import("../views/secretaria/secretaria-form.vue")
   },
   {
-    path: '/secretaria/detalhar',
-    name: 'home',
-    component: () => import("../views/secretaria/FormDetalharSecretaria.vue")
+    path: '/agenda/listar',
+    name: 'agenda-listar',
+    component: () => import("../views/agenda/agenda-list.vue")
   },
   {
-    path: '/agenda',
-    name: 'agenda',
-    component: () => import("../views/agenda/AgendaView.vue")
-  },
-  {
-    path: '/historico',
-    name: 'historico',
-    component: () => import("../views/historico/HistoricoView.vue")
+    path: '/historico/listar',
+    name: 'historico-listar',
+    component: () => import("../views/historico/historico-list.vue")
   },
 ]
 

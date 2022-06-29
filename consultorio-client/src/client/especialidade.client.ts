@@ -1,7 +1,8 @@
-import { Especialidade } from "@/model/especialidade.model";
+import axios, { AxiosInstance } from "axios";
+
+import { Especialidade } from "@/model/especialidade";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
-import axios, { AxiosInstance } from "axios";
 
 
 export class EspecialidadeClient {
@@ -15,33 +16,13 @@ export class EspecialidadeClient {
         });
     }
 
-    public async findById(id: number): Promise<Especialidade> {
+    public async findById(id: number) : Promise<Especialidade> {
         try {
             return (await this.axiosClient.get<Especialidade>(`/${id}`)).data
         } catch (error:any) {
             return Promise.reject(error.response)
         }
     }
-
-  	public async findByFiltrosPaginado(pageRequest : PageRequest): Promise<PageResponse<Especialidade>> {
-		try {
-			
-			let requestPath = ''
-			
-			requestPath += `?page=${pageRequest.currentPage}`
-			requestPath += `&size=${pageRequest.pageSize}`
-			requestPath += `&sort=${pageRequest.sortField === undefined 
-				? '' : pageRequest.sortField},${pageRequest.direction}`
-			
-			return (await this.axiosClient.get<PageResponse<Especialidade>>(requestPath, 
-				{ 
-					params: { filtros: pageRequest.filter } 
-				}
-			)).data
-		} catch (error:any) { 
-			return Promise.reject(error.response) 
-		}
-  	}
 
 	public async cadastrar(especialidade: Especialidade): Promise<void> {
 		try {
@@ -64,6 +45,20 @@ export class EspecialidadeClient {
 			return (await this.axiosClient.put(`/desativar/${especialidade.id}`, especialidade)).data
 		} catch (error:any) {
 			return Promise.reject(error.response)
+		}
+	}
+
+	public async findByFiltrosPaginado(pageRequest: PageRequest): Promise<PageResponse<Especialidade>> {
+		try {
+			let requestPath = ''
+
+			requestPath += `?page=${pageRequest.currentPage}`
+			requestPath += `&size=${pageRequest.pageSize}`
+			requestPath += `&sort=${pageRequest.sortField === undefined ? '' : pageRequest.sortField},${pageRequest.direction}`
+
+			return (await this.axiosClient.get<PageResponse<Especialidade>>(requestPath, { params: { filtros: pageRequest.filter } })).data
+		} catch (error:any) { 
+			return Promise.reject(error.response) 
 		}
 	}
 }

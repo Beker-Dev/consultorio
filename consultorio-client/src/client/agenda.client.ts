@@ -1,4 +1,4 @@
-import { Agenda } from "@/model/agenda.model";
+import { Agenda } from "@/model/agenda";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";

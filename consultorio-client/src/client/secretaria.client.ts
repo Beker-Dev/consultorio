@@ -1,4 +1,4 @@
-import { Secretaria } from "@/model/secretaria.model";
+import { Secretaria } from "@/model/secretaria";
 import { PageRequest } from "@/model/page/page-request";
 import { PageResponse } from "@/model/page/page-response";
 import axios, { AxiosInstance } from "axios";

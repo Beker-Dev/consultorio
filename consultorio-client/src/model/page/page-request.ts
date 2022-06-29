@@ -1,5 +1,5 @@
 
-export class PageRequest {
+ export class PageRequest {
     filter!: string
     currentPage!: number
     pageSize!: number
