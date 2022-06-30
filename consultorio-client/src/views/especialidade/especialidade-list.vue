@@ -38,7 +38,7 @@
         </th>
         
         <th>{{ item.nome }}</th>
-        <th> <button class="button is-small is-warning"> Detalhar </button> </th>
+        <th> <button @click="onClickPaginaDetalhar(item.id)" class="button is-small is-warning"> Detalhar </button></th>
       </tr>
     </tbody>
   </table>
@@ -77,6 +77,10 @@
           },
           error => console.log(error)
         )
+    }
+    
+    private onClickPaginaDetalhar(idEspecialidade: number){
+      this.$router.push({ name: 'especialidade-detalhar', params: { id: idEspecialidade} })
     }
   }
 </script>

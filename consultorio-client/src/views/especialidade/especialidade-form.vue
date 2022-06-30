@@ -51,7 +51,6 @@
 
 <script lang="ts">
     import { Vue } from 'vue-class-component';
-
     import { Especialidade } from '@/model/especialidade'
     import { Notification } from '@/model/notification'
     import { EspecialidadeClient } from '@/client/especialidade.client'

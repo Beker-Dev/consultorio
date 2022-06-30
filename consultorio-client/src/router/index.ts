@@ -18,6 +18,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "form" */ '../views/especialidade/especialidade-form.vue')
   },
   {
+    path: '/especialidade/detalhar/:id',
+    name: 'especialidade-detalhar',
+    props: (router) => ({ id: router.params.id}),
+    component: () => import('../views/especialidade/especialidade-detail.vue')
+  },
+  {
     path: '/convenio/listar',
     name: 'convenio-listar',
     component: () => import('../views/convenio/convenio-list.vue')

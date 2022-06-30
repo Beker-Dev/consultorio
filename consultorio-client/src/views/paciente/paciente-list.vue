@@ -61,7 +61,7 @@
     private pageResponse: PageResponse<Paciente> = new PageResponse()
 
     private pacienteList: Paciente[] = []
-    private acienteClient!: PacienteClient
+    private pacienteClient!: PacienteClient
 
     public mounted(): void {
       this.pacienteClient = new PacienteClient()
