@@ -2,7 +2,7 @@
     
     <div class="columns">
         <div class="column is-12 is-size-3">
-            Cadastrar Especialidade
+            Editar Especialidade: {{especialidade.nome}}
         </div>
     </div>
 
@@ -30,7 +30,7 @@
         <div class="column is-12 is-size-3">
             <label class="label">Nome</label>
             <div class="control">
-                <input class="input is-primary" type="text" v-model="especialidade.nome" placeholder="Nome da Especialidade">
+                <input class="input is-primary" type="text" v-model="especialidade.nome" placeholder="{{especialidade.nome}}">
             </div>
         </div>
     </div>
@@ -40,10 +40,10 @@
     <div class="columns">
         <div class="column is-8"></div>
         <div class="column is-2">
-            <a href="/especialidade/listar" class="button is-fullwidth is-info">Voltar</a>
+            <a @click="onClickVoltar()" class="button is-fullwidth is-info">Voltar</a>
         </div>
         <div class="column is-2">
-            <button class="button is-fullwidth is-success" @click="onClickCadastrar()">Salvar</button>
+            <button class="button is-fullwidth is-success" @click="onClickEditar()">Salvar</button>
         </div>
     </div>
 
@@ -51,6 +51,7 @@
 
 <script lang="ts">
     import { Vue } from 'vue-class-component';
+    import { Prop } from 'vue-property-decorator'
     import { Especialidade } from '@/model/especialidade'
     import { Notification } from '@/model/notification'
     import { EspecialidadeClient } from '@/client/especialidade.client'
@@ -60,23 +61,29 @@
         private especialidadeClient!: EspecialidadeClient
         private especialidade : Especialidade = new Especialidade()
         private notification : Notification = new Notification()
+
+        @Prop({ type: Number, required: false })
+        private readonly id!: number
     
         public mounted(): void {
             this.especialidadeClient = new EspecialidadeClient()
+            this.getEspecialidadeById()
+
         }
         
-        private onClickCadastrar(): void {
-
-            this.especialidadeClient.cadastrar(this.especialidade)
-                .then(
+       private getEspecialidadeById(): void {
+            this.especialidadeClient.findById(this.id)
+            .then(
                 success => {
-                    this.notification = this.notification.new(true, 'notification is-success', 'Especialidade Cadastrada com sucesso!!!')
-                    this.onClickLimpar()
-                }, error => {
-                    this.notification = this.notification.new(true, 'notification is-danger', 'Error: ' + error)
-                    this.onClickLimpar()
-                })
-        }
+                    this.especialidade.id = success.id
+                    this.especialidade.ativo = success.ativo
+                    this.especialidade.atualizado = success.atualizado
+                    this.especialidade.cadastro = success.cadastro
+                    this.especialidade.nome = success.nome
+                },
+                error => console.log(error)
+            )
+       }
 
         private onClickFecharNotificacao(): void {
             this.notification = new Notification()
@@ -86,6 +93,18 @@
             this.especialidade = new Especialidade()
         }
 
-        // private created(): void { }
+        private onClickEditar(): void {
+            this.especialidadeClient.editar(this.especialidade)
+            .then(
+                success => {
+                    this.notification = this.notification.new(true, 'notification is-success', 'Especialidade Editada com sucesso!!!')
+                }, error => {
+                    this.notification = this.notification.new(true, 'notification is-danger', 'Error: ' + error)
+                })
+        }
+
+        private onClickVoltar(): void {
+          this.$router.push({ name: 'especialidade-detalhar', params: { id: this.especialidade.id} })
+        }
     }
 </script>

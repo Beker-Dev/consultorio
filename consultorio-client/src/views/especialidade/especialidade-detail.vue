@@ -1,7 +1,8 @@
 <template>
     <div class="columns">
-        <div class="column is-12 is-size-3">
+        <div class="column is-8 is-size-3">
             Especialidade: {{especialidade.nome}}
+             <a href="/especialidade/listar" class="button is-8 is-warning">Voltar</a>
         </div>
     </div>
     
@@ -12,7 +13,7 @@
       <tr style="background: hsl(141, 53%, 53%);">
         <th style="color: #fff;">ID</th>
         <th style="color: #fff;">Ativo</th>
-        <!-- <th style="color: #fff;"></th> -->
+        <th style="color: #fff;"></th>
         <th style="color: #fff;">Opções</th>
       </tr>
     </thead>
@@ -24,11 +25,10 @@
           <span v-if="especialidade.ativo" class="tag is-success"> Ativo </span>
           <span v-if="!especialidade.ativo" class="tag is-danger"> Inativo </span>
         </th>
+        <th></th>
         <th>
-            <button class="button is-small is-danger btn-inativar"> Inativar </button>
-        </th>
-        <th>
-            <button class="button is-small is-info"> Editar </button>
+            <button @click="onClickDesativar(especialidade)" class="button is-small is-danger btn-inativar"> Inativar </button>
+            <button @click="onClickEditar()" class="button is-small is-info"> Editar </button>
         </th>
       </tr>
     </tbody>
@@ -65,13 +65,25 @@
                     this.especialidade.atualizado = success.atualizado
                     this.especialidade.cadastro = success.cadastro
                     this.especialidade.nome = success.nome
-
-                    console.log(this.especialidade)
                 },
                 error => console.log(error)
             )
         }
 
+        private onClickDesativar(): void {
+          this.especialidade.ativo = false
+          this.especialidadeClient.editar(this.especialidade)
+          .then(
+            success => {
+              this.$router.push({name: 'especialidade-listar'})
+            },
+            error => console.log(error)
+          )
+        }
+
+        private onClickEditar(): void {
+          this.$router.push({ name: 'especialidade-editar', params: { id: this.especialidade.id} })
+        }
         
     }
 </script>

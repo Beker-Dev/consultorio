@@ -24,6 +24,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/especialidade/especialidade-detail.vue')
   },
   {
+    path: '/especialidade/editar/:id',
+    name: 'especialidade-editar',
+    props: (router) => ({ id: router.params.id}),
+    component: () => import('../views/especialidade/especialidade-edit.vue')
+  },
+  {
     path: '/convenio/listar',
     name: 'convenio-listar',
     component: () => import('../views/convenio/convenio-list.vue')
