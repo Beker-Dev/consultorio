@@ -56,7 +56,7 @@
     import { Notification } from '@/model/notification'
     import { EspecialidadeClient } from '@/client/especialidade.client'
 
-    export default class EspecialidadeForm extends Vue {
+    export default class EspecialidadeEditar extends Vue {
 
         private especialidadeClient!: EspecialidadeClient
         private especialidade : Especialidade = new Especialidade()

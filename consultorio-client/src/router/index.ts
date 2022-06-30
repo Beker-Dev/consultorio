@@ -40,6 +40,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/convenio/convenio-form.vue')
   },
   {
+    path: '/convenio/detalhar/:id',
+    name: 'convenio-detalhar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/convenio/convenio-detail.vue')
+  },
+  {
+    path: '/convenio/editar/:id',
+    name: 'convenio-editar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/convenio/convenio-edit.vue')
+  },
+  {
     path: '/medico/listar',
     name: 'medico-listar',
     component: () => import("../views/medico/medico-list.vue")
