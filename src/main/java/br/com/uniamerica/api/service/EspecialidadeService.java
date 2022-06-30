@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 27/04/2022
+ * @version 1.0.0
+ */
 @Service
 public class EspecialidadeService {
 
@@ -68,22 +70,11 @@ public class EspecialidadeService {
      */
     @Transactional
     public void updateStatus(Long id, Especialidade especialidade){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        dtf.format(LocalDateTime.now());
-        if (id == especialidade.getId()) {
-            this.especialidadeRepository.updateStatus(especialidade.getId(), dtf);
-        }
-        else {
-            throw new RuntimeException();
-        }
-    }
-    @Transactional
-    public void desativar(Long id, Especialidade especialidade){
         if (id == especialidade.getId()) {
             this.especialidadeRepository.desativar(especialidade.getId());
         }
         else {
-            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+            throw new RuntimeException();
         }
     }
 }

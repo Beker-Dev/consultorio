@@ -7,7 +7,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 22/03/2022
+ * @version 1.0.0
+ */
 @MappedSuperclass
 @NoArgsConstructor
 public abstract class AbstractEntity {
@@ -27,8 +32,8 @@ public abstract class AbstractEntity {
     private LocalDateTime atualizado;
 
     @Getter @Setter
-    @Column(name = "excluido")
-    private LocalDateTime excluido;
+    @Column(name = "ativo", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean ativo;
 
     /**
      *

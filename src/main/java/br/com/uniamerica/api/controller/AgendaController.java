@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 07/04/2022
+ * @version 1.0.0
+ */
 @Controller
 @RequestMapping("/api/agendas")
 public class AgendaController {
@@ -19,20 +22,18 @@ public class AgendaController {
     @Autowired
     private AgendaService agendaService;
 
-
     @GetMapping("/{idAgenda}")
-    public ResponseEntity<Optional<Agenda>> findById(
+    public ResponseEntity<Agenda> findById(
             @PathVariable("idAgenda") Long idAgenda
     ){
-        return ResponseEntity.ok().body(this.agendaService.findById(idAgenda));
+        return ResponseEntity.ok().body(this.agendaService.findById(idAgenda).get());
     }
-
 
     @GetMapping
     public ResponseEntity<Page<Agenda>> listByAllPage(
             Pageable pageable
     ){
-        return ResponseEntity.ok().body(this.agendaService.listAll(pageable));
+        return ResponseEntity.ok().body(this.agendaService.findAll(pageable));
     }
 
     @PostMapping
@@ -49,8 +50,8 @@ public class AgendaController {
 
     @PutMapping("/{idAgenda}")
     public ResponseEntity<?> update(
-            @PathVariable Long idAgenda,
-            @RequestBody Agenda agenda
+            @RequestBody Agenda agenda,
+            @PathVariable Long idAgenda
     ){
         try {
             this.agendaService.update(idAgenda, agenda);
@@ -60,14 +61,13 @@ public class AgendaController {
         }
     }
 
-
-    @PutMapping("/desativar/{idAgenda}")
-    public ResponseEntity<?> desativar(
-            @PathVariable Long idAgenda,
-            @RequestBody Agenda agenda
+    @PutMapping("/status/{idAgenda}")
+    public ResponseEntity<?> updateStatus(
+            @RequestBody Agenda agenda,
+            @PathVariable Long idAgenda
     ){
         try {
-            this.agendaService.desativar(idAgenda, agenda);
+            this.agendaService.updateStatus(idAgenda, agenda);
             return ResponseEntity.ok().body("Agenda Desativada com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

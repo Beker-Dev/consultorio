@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 
 /**
- * @author Eduardo Sganderla
+ * @author Eduardo Mendes
  *
  * @since 1.0.0, 22/03/2022
  * @version 1.0.0
@@ -63,7 +63,7 @@ public abstract class Pessoa extends AbstractEntity {
     private Sexo sexo;
 
     /**
-     * @see AbstractEntity#AbstractEntity(Long) 
+     * @see AbstractEntity#AbstractEntity(Long)
      *
      * @param id
      * @param nome

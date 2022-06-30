@@ -9,7 +9,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 22/03/2022
+ * @version 1.0.0
+ */
 @Entity
 @Table(name = "convenios", schema = "public")
 public class Convenio extends AbstractEntity {
@@ -22,5 +27,4 @@ public class Convenio extends AbstractEntity {
     @Digits(integer = 5, fraction = 3)
     @Column(name = "valor", precision = 5, scale = 3, nullable = false)
     private BigDecimal valor;
-
 }

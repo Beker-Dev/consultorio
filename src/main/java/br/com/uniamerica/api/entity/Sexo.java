@@ -1,7 +1,7 @@
 package br.com.uniamerica.api.entity;
 
 /**
- * @author Eduardo Sganderla
+ * @author Eduardo Mendes
  *
  * @since 1.0.0, 22/03/2022
  * @version 1.0.0

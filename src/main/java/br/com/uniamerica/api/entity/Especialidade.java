@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * @author Eduardo Sganderla
+ * @author Eduardo Mendes
  *
  * @since 1.0.0, 22/03/2022
  * @version 1.0.0

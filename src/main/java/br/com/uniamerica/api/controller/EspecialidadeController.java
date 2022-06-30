@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 
 @Controller
 @RequestMapping("/api/especialidades")
@@ -20,10 +18,10 @@ public class EspecialidadeController {
     private EspecialidadeService especialidadeService;
 
     @GetMapping("/{idEspecialidade}")
-    public ResponseEntity<Optional<Especialidade>> findById(
+    public ResponseEntity<Especialidade> findById(
             @PathVariable("idEspecialidade") Long idEspecialidade
     ){
-        return ResponseEntity.ok().body(this.especialidadeService.findById(idEspecialidade));
+        return ResponseEntity.ok().body(this.especialidadeService.findById(idEspecialidade).get());
     }
 
     @GetMapping
@@ -45,11 +43,10 @@ public class EspecialidadeController {
         }
     }
 
-
     @PutMapping("/{idEspecialidade}")
     public ResponseEntity<?> update(
-            @PathVariable Long idEspecialidade,
-            @RequestBody Especialidade especialidade
+            @RequestBody Especialidade especialidade,
+            @PathVariable Long idEspecialidade
     ){
         try {
             this.especialidadeService.update(idEspecialidade, especialidade);
@@ -59,14 +56,13 @@ public class EspecialidadeController {
         }
     }
 
-
-    @PutMapping("/desativar/{idEspecialidade}")
-    public ResponseEntity<?> desativar(
-            @PathVariable Long idEspecialidade,
-            @RequestBody Especialidade especialidade
+    @PutMapping("/status/{idEspecialidade}")
+    public ResponseEntity<?> updateStatus(
+            @RequestBody Especialidade especialidade,
+            @PathVariable Long idEspecialidade
     ){
         try {
-            this.especialidadeService.desativar(idEspecialidade, especialidade);
+            this.especialidadeService.updateStatus(idEspecialidade, especialidade);
             return ResponseEntity.ok().body("Especialidade Desativada com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

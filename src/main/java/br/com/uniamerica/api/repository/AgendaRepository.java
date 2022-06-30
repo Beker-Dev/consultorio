@@ -1,52 +1,44 @@
 package br.com.uniamerica.api.repository;
 
 import br.com.uniamerica.api.entity.Agenda;
-import br.com.uniamerica.api.entity.Secretaria;
-import br.com.uniamerica.api.entity.StatusAgenda;
+import br.com.uniamerica.api.entity.Medico;
+import br.com.uniamerica.api.entity.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 31/03/2022
+ * @version 1.0.0
+ */
 @Repository
 public interface AgendaRepository extends JpaRepository<Agenda, Long> {
 
     @Modifying
-    @Query("UPDATE Agenda agenda " +
-            "SET agenda.excluido = :now " +
-            "WHERE agenda.id = :agenda")
-    public void updateStatus(@Param("agenda") Long idAgenda, @Param("now") DateTimeFormatter now);
-
-    @Query(
-            "SELECT agenda.id FROM Agenda agenda WHERE agenda.medico = :idMedico AND agenda.data = :horaAgenda" +
-            " OR agenda.paciente = :idPaciente AND agenda.data = :horaAgenda" +
-            " AND agenda.data BETWEEN :horaInicio AND :horaEntradaAlmoco AND agenda.data BETWEEN :horaSaidaAlmoco AND :horaFim"
-    )
-    public List<Long> agendamentoExiste(
-            @Param("agenda") Agenda agenda,
-            @Param("idMedico") Long idMedico,
-            @Param("idPaciente") Long idPaciente,
-            @Param("horaAgenda") LocalDateTime horaAgenda,
-            @Param("horaInicio") LocalDateTime horaInicio,
-            @Param("horaFim") LocalDateTime horaFim,
-            @Param("horaEntradaAlmoco") LocalDateTime horaEntradaAlmoco,
-            @Param("horaSaidaAlmoco") LocalDateTime horaSaidaAlmoco
-    );
-
-    @Query("SELECT agenda.secretaria FROM Agenda agenda WHERE agenda.id = :idAgenda")
-    public Long getSecretaria(@Param("secretaria") Secretaria secretaria);
-
-    @Query("SELECT agenda.status FROM Agenda agenda WHERE agenda.id = :idAgenda")
-    public String getStatusAgenda(@Param("status") StatusAgenda status);
-
-    @Modifying
-    @Query("UPDATE Agenda agenda SET agenda.excluido = true WHERE agenda.id = :idAgenda")
+    @Query("UPDATE Agenda agenda SET agenda.ativo = false WHERE agenda.id = :idAgenda")
     public void desativar(@Param("idAgenda") Long idAgenda);
 
+    @Query("select agenda from Agenda agenda where :dataDe between agenda.dataDe and agenda.dataAte " +
+            "and :dataAte between agenda.dataDe and agenda.dataAte and agenda.medico = :idMedico " +
+            "and agenda.id <> :idAgenda")
+    public List<Agenda> findOverlaps(@Param("dataDe") LocalDateTime dataDe,
+                                     @Param("dataAte") LocalDateTime dataAte,
+                                     @Param("idMedico") Long idMedico,
+                                     @Param("idAgenda") Long idAgenda);
+
+    @Query("select agenda from Agenda agenda where :dataDe between agenda.dataDe and agenda.dataAte " +
+            "and :dataAte between agenda.dataDe and agenda.dataAte and agenda.paciente = :idPaciente " +
+            "and agenda.id <> :idAgenda")
+    public List<Agenda> sameTimeAndPatient(@Param("dataDe") LocalDateTime dataDe,
+                                           @Param("dataAte") LocalDateTime dataAte,
+                                           @Param("idPaciente") Long idPaciente,
+                                            @Param("idAgenda") Long idAgenda);
 }

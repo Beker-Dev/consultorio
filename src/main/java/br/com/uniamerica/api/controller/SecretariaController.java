@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 07/04/2022
+ * @version 1.0.0
+ */
 @Controller
 @RequestMapping("/api/secretarias")
 public class SecretariaController {
@@ -20,10 +23,10 @@ public class SecretariaController {
     private SecretariaService secretariaService;
 
     @GetMapping("/{idSecretaria}")
-    public ResponseEntity<Optional<Secretaria>> findById(
+    public ResponseEntity<Secretaria> findById(
             @PathVariable("idSecretaria") Long idSecretaria
     ){
-        return ResponseEntity.ok().body(this.secretariaService.findById(idSecretaria));
+        return ResponseEntity.ok().body(this.secretariaService.findById(idSecretaria).get());
     }
 
     @GetMapping
@@ -39,7 +42,7 @@ public class SecretariaController {
     ){
         try {
             this.secretariaService.insert(secretaria);
-            return ResponseEntity.ok().body("Secretaria Cadastrada com Sucesso.");
+            return ResponseEntity.ok().body("Secretario(a) Cadastrado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -47,25 +50,25 @@ public class SecretariaController {
 
     @PutMapping("/{idSecretaria}")
     public ResponseEntity<?> update(
-            @PathVariable Long idSecretaria,
-            @RequestBody Secretaria secretaria
+            @RequestBody Secretaria secretaria,
+            @PathVariable Long idSecretaria
     ){
         try {
             this.secretariaService.update(idSecretaria, secretaria);
-            return ResponseEntity.ok().body("Secretaria Atualizada com Sucesso.");
+            return ResponseEntity.ok().body("Secretario(a) Atualizado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PutMapping("/desativar/{idEspecialidade}")
-    public ResponseEntity<?> desativar(
-            @PathVariable Long idSecretaria,
-            @RequestBody Secretaria secretaria
+    @PutMapping("/status/{idSecretaria}")
+    public ResponseEntity<?> updateStatus(
+            @RequestBody Secretaria secretaria,
+            @PathVariable Long idSecretaria
     ){
         try {
-            this.secretariaService.desativar(idSecretaria, secretaria);
-            return ResponseEntity.ok().body("Secretaria Desativada com Sucesso.");
+            this.secretariaService.updateStatus(idSecretaria, secretaria);
+            return ResponseEntity.ok().body("Secretario(a) Desativado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

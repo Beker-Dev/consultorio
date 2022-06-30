@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * @author Eduardo Sganderla
+ * @author Eduardo Mendes
  *
  * @since 1.0.0, 22/03/2022
  * @version 1.0.0

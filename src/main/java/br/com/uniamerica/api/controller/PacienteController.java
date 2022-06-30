@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 07/04/2022
+ * @version 1.0.0
+ */
 @Controller
 @RequestMapping("/api/pacientes")
 public class PacienteController {
@@ -20,12 +23,11 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @GetMapping("/{idPaciente}")
-    public ResponseEntity<Optional<Paciente>> findById(
+    public ResponseEntity<Paciente> findById(
             @PathVariable("idPaciente") Long idPaciente
     ){
-        return ResponseEntity.ok().body(this.pacienteService.findById(idPaciente));
+        return ResponseEntity.ok().body(this.pacienteService.findById(idPaciente).get());
     }
-
 
     @GetMapping
     public ResponseEntity<Page<Paciente>> listByAllPage(
@@ -40,7 +42,7 @@ public class PacienteController {
     ){
         try {
             this.pacienteService.insert(paciente);
-            return ResponseEntity.ok().body("Paciente Cadastrada com Sucesso.");
+            return ResponseEntity.ok().body("Paciente Cadastrado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -48,25 +50,25 @@ public class PacienteController {
 
     @PutMapping("/{idPaciente}")
     public ResponseEntity<?> update(
-            @PathVariable Long idPaciente,
-            @RequestBody Paciente paciente
+            @RequestBody Paciente paciente,
+            @PathVariable Long idPaciente
     ){
         try {
             this.pacienteService.update(idPaciente, paciente);
-            return ResponseEntity.ok().body("Paciente Atualizada com Sucesso.");
+            return ResponseEntity.ok().body("Paciente Atualizado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PutMapping("/desativar/{idPaciente}")
-    public ResponseEntity<?> desativar(
-            @PathVariable Long idPaciente,
-            @RequestBody Paciente paciente
+    @PutMapping("/status/{idPaciente}")
+    public ResponseEntity<?> updateStatus(
+            @RequestBody Paciente paciente,
+            @PathVariable Long idPaciente
     ){
         try {
-            this.pacienteService.desativar(idPaciente, paciente);
-            return ResponseEntity.ok().body("Paciente Desativada com Sucesso.");
+            this.pacienteService.updateStatus(idPaciente, paciente);
+            return ResponseEntity.ok().body("Paciente Desativado com Sucesso.");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

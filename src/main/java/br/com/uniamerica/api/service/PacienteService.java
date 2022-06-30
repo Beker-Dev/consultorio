@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,70 +18,84 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
-    public Optional<Paciente> findById(Long id) {return this.pacienteRepository.findById(id);}
-
-    public Page<Paciente> findAll(Pageable pageable) {return this.pacienteRepository.findAll(pageable);}
-
-    public void update(Long id, Paciente paciente) {
-        if (id == paciente.getId()) {
-            this.validarFormulario(paciente);
-            this.saveTransactional(paciente);
-        }
-        else {
-            throw new RuntimeException();
-        }
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Optional<Paciente> findById(Long id){
+        return this.pacienteRepository.findById(id);
     }
 
-    public void insert(Paciente paciente) {
-        this.validarFormulario(paciente);
-        this.saveTransactional(paciente);
+    /**
+     *
+     * @param pageable
+     * @return
+     */
+    public Page<Paciente> findAll(Pageable pageable){
+        return this.pacienteRepository.findAll(pageable);
     }
 
+    /**
+     *
+     * @param id
+     * @param paciente
+     */
+    public void update(Long id, Paciente paciente){
+        validarFormulario(paciente);
+        saveTransactional(paciente);
+    }
+
+    public void insert(Paciente paciente){
+        validarFormulario(paciente);
+        saveTransactional(paciente);
+    }
+
+    /**
+     *
+     * @param paciente
+     */
     @Transactional
-    public void saveTransactional(Paciente paciente) {
+    public void saveTransactional(Paciente paciente){
         this.pacienteRepository.save(paciente);
     }
 
+    /**
+     *
+     * @param id
+     * @param paciente
+     */
     @Transactional
-    public void updateStatus(Long id, Paciente paciente) {
+    public void updateStatus(Long id, Paciente paciente){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        dtf.format(LocalDateTime.now());
-        if (id == paciente.getId()) {
-            this.pacienteRepository.updateStatus(paciente.getId(), dtf);
-        }
-        else {
-            throw new RuntimeException();
-        }
-    }
-
-    public void validarFormulario(Paciente paciente) {
-        if (paciente.getTipoAtendimento().equals(TipoAtendimento.convenio)) {
-            if (paciente.getConvenio() == null || paciente.getConvenio().getId() == null) {
-                throw new RuntimeException("convenio nao informado");
-            }
-            if (paciente.getNumeroCartaoConvenio().isBlank()) {
-                throw new RuntimeException("cartao convenio nao informado");
-            }
-            if (paciente.getDataVencimento() == null) {
-                throw new RuntimeException("data de vencimento do cartao nao informado");
-            }
-            if (paciente.getDataVencimento().compareTo(LocalDateTime.now()) > 0) {
-                throw new RuntimeException("data de vencimento do cartao esta expirada");
-            }
-        }
-        if (paciente.getTipoAtendimento().equals(TipoAtendimento.particular)) {
-            paciente.setConvenio(null);
-            paciente.setNumeroCartaoConvenio(null);
-            paciente.setDataVencimento(null);
-        }
-    }
-    @Transactional
-    public void desativar(Long id, Paciente paciente) {
+        LocalDateTime dataNow = LocalDateTime.parse(dtf.format(LocalDateTime.now()));
         if (id == paciente.getId()) {
             this.pacienteRepository.desativar(paciente.getId());
         }
         else {
-            throw new RuntimeException("Error: Não foi possivel editar a Secretaria, valores inconsistentes.");
+            throw new RuntimeException();
+        }
+    }
+
+    public void validarFormulario(Paciente paciente){
+        if(paciente.getTipoAtendimento().equals(TipoAtendimento.convenio) ){
+            if(paciente.getConvenio() == null || paciente.getConvenio().getId() == null){
+                throw new RuntimeException("Convenio não informado");
+            }
+            if(paciente.getDataVencimento() == null){
+                throw new RuntimeException("Data de vencimento não informada");
+            }
+            if(paciente.getNumeroCartaoConvenio() == null){
+                throw new RuntimeException("Cartão convênio não informado");
+            }
+            if(paciente.getDataVencimento().compareTo(LocalDateTime.now()) <= 0){
+                throw new RuntimeException("Data de vencimento do cartão está expirada");
+            }
+        }
+        if(paciente.getTipoAtendimento().equals(TipoAtendimento.particular)){
+            paciente.setConvenio(null);
+            paciente.setNumeroCartaoConvenio(null);
+            paciente.setDataVencimento(null);
         }
     }
 }

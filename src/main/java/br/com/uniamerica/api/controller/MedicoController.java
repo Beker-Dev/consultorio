@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
+/**
+ * @author Eduardo Mendes
+ *
+ * @since 1.0.0, 07/04/2022
+ * @version 1.0.0
+ */
 @Controller
 @RequestMapping("/api/medicos")
 public class MedicoController {
@@ -19,57 +22,54 @@ public class MedicoController {
     @Autowired
     private MedicoService medicoService;
 
-
     @GetMapping("/{idMedico}")
-    public ResponseEntity<Optional<Medico>> findById(
+    public ResponseEntity<Medico> findById(
             @PathVariable("idMedico") Long idMedico
     ){
-        return ResponseEntity.ok().body(this.medicoService.findById(idMedico));
+        return ResponseEntity.ok().body(this.medicoService.findById(idMedico).get());
     }
 
     @GetMapping
-    public ResponseEntity<Page<Medico>> listByAllPage(
+    public ResponseEntity<Page<Medico>> findByAllMedico(
             Pageable pageable
     ){
         return ResponseEntity.ok().body(this.medicoService.listAll(pageable));
     }
-
-
-    @PostMapping
-    public ResponseEntity<?> insert(
-            @RequestBody Medico medico
-    ){
-        try {
-            this.medicoService.insert(medico);
-            return ResponseEntity.ok().body("Médico Cadastrada com Sucesso.");
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
 
     @PutMapping("/{idMedico}")
     public ResponseEntity<?> update(
             @PathVariable Long idMedico,
             @RequestBody Medico medico
     ){
-        try {
+        try{
             this.medicoService.update(idMedico, medico);
-            return ResponseEntity.ok().body("Médico Atualizada com Sucesso.");
-        }catch (Exception e) {
+            return ResponseEntity.ok().body("Medico Atualizado com sucesso!");
+        }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PutMapping("/desativar/{idMedico}")
-    public ResponseEntity<?> desativar(
+    @PostMapping
+    public ResponseEntity<?> insert(
+            @RequestBody Medico medico
+    ){
+        try{
+            this.medicoService.insert(medico);
+            return ResponseEntity.ok().body("Médico cadastrado com sucesso!");
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/status/{idMedico}")
+    public ResponseEntity<?> updateStatus(
             @PathVariable Long idMedico,
             @RequestBody Medico medico
     ){
-        try {
-            this.medicoService.desativar(idMedico, medico);
-            return ResponseEntity.ok().body("Médico Desativada com Sucesso.");
-        }catch (Exception e) {
+        try{
+            this.medicoService.updateStatus(idMedico, medico);
+            return ResponseEntity.ok().body("Médico desativado com sucesso!");
+        }catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
