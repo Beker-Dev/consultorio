@@ -7,4 +7,9 @@ export class Medico extends Pessoa {
     porcentagemParticipacao! : number
     valorConsulta! : number
     especialidade! : Especialidade
+
+    constructor() {
+        super()
+        this.ativo = true
+    }
 }

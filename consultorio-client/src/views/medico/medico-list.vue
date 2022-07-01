@@ -25,6 +25,10 @@
         <th style="color: #fff;">ID</th>
         <th style="color: #fff;">Ativo</th>
         <th style="color: #fff;">Medico</th>
+        <th style="color: #fff;">CRM</th>
+        <th style="color: #fff;">Valor Consulta</th>
+        <th style="color: #fff;">Celular</th>
+        <th style="color: #fff;">Especialidade</th>
         <th style="color: #fff;">Opções</th>
       </tr>
     </thead>
@@ -38,6 +42,10 @@
         </th>
         
         <th>{{ item.nome }}</th>
+        <th>{{ item.crm }}</th>
+        <th>R${{ item.valorConsulta }}</th>
+        <th>{{ item.celular }}</th>
+        <th>{{ item.especialidade }}</th>
         <th> <button class="button is-small is-warning"> Detalhar </button> </th>
       </tr>
     </tbody>
