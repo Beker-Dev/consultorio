@@ -60,7 +60,7 @@ export class SecretariaClient {
 
     public async desativar(secretaria: Secretaria): Promise<void> {
         try {
-            return (await this.axiosClient.put(`/desativar/${secretaria.id}`, secretaria)).data
+            return (await this.axiosClient.put(`/status/${secretaria.id}`, secretaria)).data
         } catch (error:any) {
             return Promise.reject(error.response)
         }
