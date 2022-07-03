@@ -45,8 +45,11 @@
         <th>{{ item.crm }}</th>
         <th>R${{ item.valorConsulta }}</th>
         <th>{{ item.celular }}</th>
-        <th>{{ item.especialidade }}</th>
-        <th> <button class="button is-small is-warning"> Detalhar </button> </th>
+        <th>
+            <span v-if="item.especialidade"> {{item.especialidade.nome}} </span>
+            <span v-if="!item.especialidade" > --- </span>
+        </th>
+        <th> <button @click="onClickPaginaDetalhar(item.id)" class="button is-small is-warning"> Detalhar </button> </th>
       </tr>
     </tbody>
   </table>
@@ -85,6 +88,10 @@
           },
           error => console.log(error)
         )
+    }
+
+    private onClickPaginaDetalhar(idMedico: number){
+      this.$router.push({ name: 'medico-detalhar', params: { id: idMedico} })
     }
   }
 </script>

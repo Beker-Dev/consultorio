@@ -60,7 +60,7 @@ export class PacienteClient {
 
     public async desativar(paciente: Paciente): Promise<void> {
         try {
-            return (await this.axiosClient.put(`/desativar/${paciente.id}`, paciente)).data
+            return (await this.axiosClient.put(`/status/${paciente.id}`, paciente)).data
         } catch (error:any) {
             return Promise.reject(error.response)
         }

@@ -102,7 +102,11 @@
         <div class="column is-12 is-size-3">
             <label class="label">Sexo</label>
             <div class="control">
-                <input class="input is-primary" type="text" v-model="medico.sexo" placeholder="Sexo">
+               <select v-model="medico.sexo">
+                  <option>masculino</option>
+                  <option>feminino</option>
+                  <option>outro</option>
+                </select>
             </div>
         </div>
     </div>

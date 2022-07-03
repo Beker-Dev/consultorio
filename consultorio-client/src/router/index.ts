@@ -62,6 +62,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/medico/medico-form.vue")
   },
   {
+    path: '/medico/detalhar/:id',
+    name: 'medico-detalhar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/medico/medico-detail.vue')
+  },
+  {
+    path: '/medico/editar/:id',
+    name: 'medico-editar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/medico/medico-edit.vue')
+  },
+  {
     path: '/paciente/listar',
     name: 'paciente-listar',
     component: () => import("../views/paciente/paciente-list.vue")
@@ -72,6 +84,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/paciente/paciente-form.vue")
   },
   {
+    path: '/paciente/detalhar/:id',
+    name: 'paciente-detalhar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/paciente/paciente-detail.vue')
+  },
+  {
+    path: '/paciente/editar/:id',
+    name: 'paciente-editar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/paciente/paciente-edit.vue')
+  },
+  {
     path: '/secretaria/listar',
     name: 'secretaria-listar',
     component: () => import("../views/secretaria/secretaria-list.vue")
@@ -80,6 +104,18 @@ const routes: Array<RouteRecordRaw> = [
     path: '/secretaria/cadastrar',
     name: 'secretaria-cadastrar',
     component: () => import("../views/secretaria/secretaria-form.vue")
+  },
+  {
+    path: '/secretaria/detalhar/:id',
+    name: 'secretaria-detalhar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/secretaria/secretaria-detail.vue')
+  },
+  {
+    path: '/secretaria/editar/:id',
+    name: 'secretaria-editar',
+    props: (router) => ({id: router.params.id}),
+    component: () => import('../views/secretaria/secretaria-edit.vue')
   },
   {
     path: '/agenda/listar',
